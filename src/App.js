@@ -1,10 +1,26 @@
-import './App.css';
+import "./App.css";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Player from "./pages/Player";
+import TvShow from "./pages/TvShow";
+import Netflix from "./pages/Netflix";
+import Movies from "./pages/Movies";
+import BackgroundImage from "./components/BackgroundImage";
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <BrowserRouter>
+      {/* <Routes>
+        <Route exact path='/login' element={<Login/>}/>
+        <Route exact path='/signup' element={<SignUp/>}/>
+        <Route exact path='/player' element={<Player/>}/>
+        <Route exact path='/tv' element={<TvShow/>}/>
+        <Route exact path='/' element={<Netflix/>}/>
+        <Route exact path='/movie' element={<Movies/>}/>
+      </Routes> */}
+      <BackgroundImage/>
+    </BrowserRouter>
   );
 }
 

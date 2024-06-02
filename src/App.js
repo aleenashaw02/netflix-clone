@@ -7,6 +7,7 @@ import TvShow from "./pages/TvShow";
 import Netflix from "./pages/Netflix";
 import Movies from "./pages/Movies";
 import BackgroundImage from "./components/BackgroundImage";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route exact path='/' element={<Netflix/>}/>
         <Route exact path='/movie' element={<Movies/>}/>
       </Routes> */}
-      <BackgroundImage/>
+      {/* <BackgroundImage/> */}
+      <Header />
     </BrowserRouter>
   );
 }

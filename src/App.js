@@ -21,7 +21,8 @@ function App() {
         <Route exact path='/movie' element={<Movies/>}/>
       </Routes> */}
       {/* <BackgroundImage/> */}
-      <Header />
+      {/* <Header /> */}
+      <SignUp />
     </BrowserRouter>
   );
 }

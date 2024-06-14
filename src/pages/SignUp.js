@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import BackgroundImage from "../components/BackgroundImage";
 
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <Container>
       <BackgroundImage />
@@ -18,10 +19,16 @@ const SignUp = () => {
             </h6>
           </div>
           <div className="form">
-            <input type="password" placeholder="Password" name="password" />
-            <input type="email" placeholder="Email Address" name="email" />
-            <button>Get Started</button>
-            <button>Sign Up</button>
+            {showPassword ? (
+              <input type="password" placeholder="Password" name="password" />
+            ) : (
+              <input type="email" placeholder="Email Address" name="email" />
+            )}
+            {!showPassword ? (
+              <button onClick={() => setShowPassword(true)}>Get Started</button>
+            ) : (
+              <button>Sign Up</button>
+            )}
           </div>
         </div>
       </div>
@@ -64,12 +71,26 @@ const Container = styled.div`
   }
   .form {
     display: grid;
+    grid-template-columns: ${({ showPassword }) =>
+      showPassword ? "1fr 1fr" : " 2fr 1fr"};
     width: 60%;
+    button {
+      padding: 0.5rem 1rem;
+      background-color: red;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.05rem;
+      width: 10rem;
+    }
     input {
       color: black;
       padding: 1.5rem;
       font-size: 1.2rem;
       width: 45rem;
+      &:focus {
+        outline: none;
+      }
     }
   }
 `;

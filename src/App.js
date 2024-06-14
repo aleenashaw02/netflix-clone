@@ -12,17 +12,17 @@ import Header from "./components/Header";
 function App() {
   return (
     <BrowserRouter>
-      {/* <Routes>
-        <Route exact path='/login' element={<Login/>}/>
-        <Route exact path='/signup' element={<SignUp/>}/>
-        <Route exact path='/player' element={<Player/>}/>
-        <Route exact path='/tv' element={<TvShow/>}/>
-        <Route exact path='/' element={<Netflix/>}/>
-        <Route exact path='/movie' element={<Movies/>}/>
-      </Routes> */}
+      <Routes>
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/player" element={<Player />} />
+        <Route exact path="/tv" element={<TvShow />} />
+        <Route exact path="/" element={<Netflix />} />
+        <Route exact path="/movie" element={<Movies />} />
+      </Routes>
       {/* <BackgroundImage/> */}
       {/* <Header /> */}
-      <SignUp />
+      {/* <SigsnUp /> */}
     </BrowserRouter>
   );
 }

@@ -1,9 +1,30 @@
 import React, { useState } from "react";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import BackgroundImage from "../components/BackgroundImage";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(firebaseAuth, email, password);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      navigate("/");
+    }
+  });
+
   return (
     <Wrapper>
       <BackgroundImage />
@@ -15,9 +36,23 @@ const Login = () => {
               <h1>Login</h1>
             </div>
             <div className="container">
-              <input type="text" placeholder="E-mail" />
-              <input type="password" placeholder="Password" />
-              <button>Login</button>
+              <input
+                type="text"
+                placeholder="E-mail"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={email}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                value={password}
+              />
+              <button onClick={handleLogin}>Login</button>
             </div>
           </div>
         </div>
@@ -32,7 +67,7 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.79);
+    background-color: rgba(0, 0, 0, 0.6);
     height: 100%;
     width: 100%;
     grid-template-column: 15vh 85vh;
@@ -50,7 +85,7 @@ const Wrapper = styled.div`
       align-items: center;
       justify-content: center;
       gap: 2rem;
-      background-color: #000000b0;
+      background-color: rgba(0, 0, 0, 0.83);
       height: 70vh;
       padding: 2rem;
       color: white;
@@ -64,7 +99,7 @@ const Wrapper = styled.div`
           border-radius: 0.4rem;
           padding: 0.5rem 1rem;
           width: 25rem;
-          height: 3.4rem;
+          height: 2.4rem;
           outline: none;
         }
         button {

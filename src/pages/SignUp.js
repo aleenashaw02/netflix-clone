@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebase-config";
 import styled from "styled-components";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+
+import { firebaseAuth } from "../utils/firebase-config";
 import Header from "../components/Header";
 import BackgroundImage from "../components/BackgroundImage";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
+
+  const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
@@ -17,6 +24,10 @@ const SignUp = () => {
       console.log(error);
     }
   };
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) navigate("/");
+  });
 
   return (
     <Container>
@@ -38,12 +49,12 @@ const SignUp = () => {
                 placeholder="Password"
                 name="password"
                 value={formValues.password}
-                onChange={(e) => {
+                onChange={(e) =>
                   setFormValues({
                     ...formValues,
                     [e.target.name]: e.target.value,
-                  });
-                }}
+                  })
+                }
               />
             ) : (
               <input
@@ -51,14 +62,15 @@ const SignUp = () => {
                 placeholder="Email Address"
                 name="email"
                 value={formValues.email}
-                onChange={(e) => {
+                onChange={(e) =>
                   setFormValues({
                     ...formValues,
                     [e.target.name]: e.target.value,
-                  });
-                }}
+                  })
+                }
               />
             )}
+
             {!showPassword ? (
               <button onClick={() => setShowPassword(true)}>Get Started</button>
             ) : (
@@ -70,6 +82,7 @@ const SignUp = () => {
     </Container>
   );
 };
+
 const Container = styled.div`
   position: relative;
   .content {
@@ -77,47 +90,37 @@ const Container = styled.div`
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.79);
-    height: 100%;
-    width: 100%;
-    grid-template-column: 15vh 85vh;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 15vh 85vh;
     .body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-top: 5rem;
     }
     .text {
       display: flex;
       flex-direction: column;
       text-align: center;
-      justify-content: center;
       font-size: 2rem;
       color: white;
+      padding: 1rem;
     }
     h1 {
-      padding: 0.25rem;
+      padding: 0 25rem;
     }
     h4 {
-      margin-top: -1.5rem;
     }
     h6 {
-      margin-top: -1.5rem;
     }
   }
   .form {
     display: grid;
-    grid-template-columns: ${({ showPassword }) =>
-      showPassword ? "1fr 1fr" : " 2fr 1fr"};
     width: 60%;
-    button {
-      padding: 0.5rem 1rem;
-      background-color: red;
-      border: none;
-      cursor: pointer;
-      color: white;
-      font-size: 1.05rem;
-      width: 10rem;
-    }
+    grid-template-columns: ${({ showPassword }) =>
+      showPassword ? "1fr 1fr" : "2fr 1fr"};
     input {
       color: black;
       padding: 1.5rem;
@@ -127,6 +130,17 @@ const Container = styled.div`
         outline: none;
       }
     }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: red;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.05rem;
+      width: 10rem;
+      font-weight: bolder;
+    }
   }
 `;
+
 export default SignUp;

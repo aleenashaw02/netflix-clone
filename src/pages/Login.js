@@ -1,34 +1,34 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+
 import Header from "../components/Header";
 import BackgroundImage from "../components/BackgroundImage";
+import styled from "styled-components";
+import { firebaseAuth } from "../utils/firebase-config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) {
-      navigate("/");
-    }
+    if (currentUser) navigate("/");
   });
 
   return (
     <Wrapper>
       <BackgroundImage />
-      <div className="loginContainer">
+      <div className="loginContent">
         <Header />
         <div className="form-wrapper">
           <div className="form">
@@ -38,18 +38,14 @@ const Login = () => {
             <div className="container">
               <input
                 type="text"
-                placeholder="E-mail"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
               <input
                 type="password"
                 placeholder="Password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
               <button onClick={handleLogin}>Login</button>
@@ -60,17 +56,16 @@ const Login = () => {
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   position: relative;
-  .loginContainer {
+  .loginContent {
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    height: 100%;
-    width: 100%;
-    grid-template-column: 15vh 85vh;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 15vh 85vh;
     .form-wrapper {
       display: flex;
       flex-direction: column;
@@ -99,7 +94,7 @@ const Wrapper = styled.div`
           border-radius: 0.4rem;
           padding: 0.5rem 1rem;
           width: 25rem;
-          height: 2.4rem;
+          height: 2.9rem;
           outline: none;
         }
         button {
@@ -117,4 +112,5 @@ const Wrapper = styled.div`
     }
   }
 `;
+
 export default Login;
